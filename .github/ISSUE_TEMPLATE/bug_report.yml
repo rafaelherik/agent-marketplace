@@ -1,0 +1,35 @@
+name: Bug report
+description: Report something that does not work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. agent-marketplace install ...
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: skill
+    attributes:
+      label: Affected skill or script
+      placeholder: skills/context-hub
+  - type: input
+    id: version
+    attributes:
+      label: Registry release and Agent Marketplace CLI version
+      placeholder: v1.0.0 / agent-marketplace 5.1.1
+  - type: input
+    id: harness
+    attributes:
+      label: Harness and OS
+      placeholder: Claude Code on macOS 15
