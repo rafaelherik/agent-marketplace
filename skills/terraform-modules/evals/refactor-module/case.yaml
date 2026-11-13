@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: refactor-module
+expected_outcome: |
+  Revised code preserves the list input and ordered list output, retains the historical
+  move, and uses stable name keys. Migration notes reject dynamic moved blocks and
+  universal guessed mappings, show the example mapping as caller-specific, and require
+  representative upgrade plans before claiming replacement-free behavior.

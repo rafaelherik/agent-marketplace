@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: create-module
+expected_outcome: |
+  A runnable module uses caller-keyed terraform_data instances, validates its typed
+  interface, documents runtime versus test-runner requirements, and includes meaningful
+  native tests and a minimal example. Report actual verification without asserting
+  that a newer CLI run proves Terraform 1.4 compatibility.
