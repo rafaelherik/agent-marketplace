@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: review-module
+expected_outcome: |
+  Findings identify root-only configuration, positional identity and output compatibility,
+  unjustified exact provider pins, false lock/sensitivity claims, and unsupported mocking.
+  The review distinguishes real-provider behavior from mocks and explains a migration
+  instead of recommending an unqualified count-to-for_each replacement.

@@ -14,6 +14,7 @@ Codex, or OpenCode.
 | Skill | Purpose | Runtime requirements |
 | --- | --- | --- |
 | [context-hub](skills/context-hub/SKILL.md) | Verify third-party API usage against documentation for the project's resolved dependency versions. | Context Hub MCP or `chub`, with an official HTTPS documentation fallback through the host's fetch/browser tool. |
+| [terraform-modules](docs/skills/terraform-modules.md) | Create, review, refactor, document, and test reusable Terraform modules using provider-neutral best practices. | Terraform CLI for checks; official documentation access. Native tests require 1.6+, mocks 1.7+; uses configured TFLint and terraform-docs when available. |
 
 The registry uses `skills/<name>/SKILL.md`. References and the license inside each
 skill directory ship with the skill. Agent Marketplace discovers this layout directly;
