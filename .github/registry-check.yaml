@@ -9,7 +9,18 @@ sources:
   codex: {directory: ./registry, source_harness: claude}
 resources:
   shared:
-    include: [skill/context-hub, skill/terraform-modules]
+    include:
+      - skill/context-hub
+      - skill/feature-implementation
+      - skill/terraform-modules
+      - subagent/feature-analyst
+      - subagent/backend-architect
+      - subagent/frontend-architect
+      - subagent/platform-architect
+      - subagent/feature-planner
+      - subagent/feature-developer
+      - subagent/feature-reviewer
+      - subagent/feature-approver
   claude-code:
     include: [subagent/cc-explorer]
     harnesses: [claude]
