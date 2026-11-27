@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/rafaelherik/agent-marketplace/compare/v1.1.0...v1.2.0) (2026-11-27)
+
+
+### Features
+
+* add feature-implementation skill and specialist agents ([#9](https://github.com/rafaelherik/agent-marketplace/issues/9)) ([2abf282](https://github.com/rafaelherik/agent-marketplace/commit/2abf28288b1e3de828e33c5472a9935d347fbb84))
+
 ## [1.1.0](https://github.com/rafaelherik/agent-marketplace/compare/v1.0.0...v1.1.0) (2026-11-27)
 
 
