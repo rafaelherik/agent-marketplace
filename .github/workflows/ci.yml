@@ -17,9 +17,6 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
-        with:
-          python-version: '3.12'
       - name: Check Conventional Commit PR title
         if: github.event_name == 'pull_request'
         env:
@@ -32,8 +29,6 @@ jobs:
           if not re.fullmatch(pattern, title):
               raise SystemExit('Use a Conventional Commit title, e.g. feat: add a skill')
           PY
-      - name: Install validation dependencies
-        run: python3 -m pip install -r requirements-dev.txt
       - name: Install pinned Agent Marketplace
         run: |
           bash scripts/install-cli.sh "$RUNNER_TEMP/registry-bin"
@@ -43,7 +38,21 @@ jobs:
           go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
           "$(go env GOPATH)/bin/actionlint"
           shellcheck scripts/*.sh
-      - name: Validate registry
-        run: bash scripts/validate-registry.sh
-      - name: Test validation and tagged updates
-        run: python3 -m unittest discover -s tests -v
+      - name: Validate registry with Agent Marketplace
+        env:
+          AGENT_MARKETPLACE_TELEMETRY_LEVEL: 'off'
+        run: |
+          set -o pipefail
+          consumer="$RUNNER_TEMP/consumer"
+          mkdir -p "$consumer/.agents"
+          cp -R "$GITHUB_WORKSPACE" "$consumer/registry"
+          cp .github/registry-check.yaml "$consumer/.agents/config.yaml"
+          git init --quiet "$consumer"
+          cd "$consumer"
+          agent-marketplace sync --strict --verbose | tee "$RUNNER_TEMP/sync.log"
+          # The CLI exits 0 when it skips a malformed skill, so check its summary.
+          grep -Eq 'Malformed +0 +Errors +0' "$RUNNER_TEMP/sync.log"
+          agent-marketplace sync --strict --check
+          # Every resource must be selected by .github/registry-check.yaml.
+          agent-marketplace list | tee "$RUNNER_TEMP/list.log"
+          if grep -qw available "$RUNNER_TEMP/list.log"; then exit 1; fi

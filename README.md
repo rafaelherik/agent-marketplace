@@ -4,7 +4,7 @@
 [![Release](https://github.com/rafaelherik/agent-marketplace/actions/workflows/release.yml/badge.svg)](https://github.com/rafaelherik/agent-marketplace/actions/workflows/release.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A versioned collection of reusable agent skills for
+A versioned collection of reusable agent skills and subagents for
 [Agent Marketplace](https://agent-marketplace.io/), supporting Claude Code,
 Factory Droid, Cursor, Windsurf, Gemini CLI, Devin CLI, Codex, and OpenCode.
 
@@ -16,7 +16,38 @@ Factory Droid, Cursor, Windsurf, Gemini CLI, Devin CLI, Codex, and OpenCode.
 | [terraform-modules](docs/skills/terraform-modules.md) | Create, review, refactor, document, and test reusable Terraform modules. |
 
 Skills live in `skills/<name>/SKILL.md`, with bundled references and licenses.
-The registry versions all skills together using semantic releases.
+The registry versions all skills and subagents together using semantic releases.
+
+## Available agents
+
+| Agent | Model | Purpose |
+| --- | --- | --- |
+| [cc-explorer](agents/cc-explorer.md) | Haiku | Fast, read-only codebase exploration in Claude Code. |
+| [cx-explorer](agents/cx-explorer.md) | GPT-6 Luna | Fast, read-only codebase exploration in Codex. |
+
+Subagents live in `agents/<name>.md`. A `cc-`, `cx-` or `gc-` prefix marks a
+resource specific to Claude Code, Codex or GitHub Copilot.
+
+Select each prefixed agent for its own harness only. Selecting `cc-explorer` for
+Codex or Cursor makes the sync fail, because they cannot express its tool restriction.
+In `.agents/config.yaml`, name what you want and give prefixed agents their own source
+groups. Do not combine these groups with `all: true`, which can silently drop agents.
+
+```yaml
+sources:
+  shared: {git: "https://github.com/rafaelherik/agent-marketplace", ref: <tag>}
+  claude-code: {git: "https://github.com/rafaelherik/agent-marketplace", ref: <tag>}
+  codex: {git: "https://github.com/rafaelherik/agent-marketplace", ref: <tag>}
+resources:
+  shared:
+    include: [skill/context-hub, skill/terraform-modules]
+  claude-code:
+    include: [subagent/cc-explorer]
+    harnesses: [claude]
+  codex:
+    include: [subagent/cx-explorer]
+    harnesses: [codex]
+```
 
 ## Getting started
 
