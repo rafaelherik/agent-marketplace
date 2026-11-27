@@ -5,6 +5,5 @@
 ## Checklist
 
 - [ ] PR title follows Conventional Commits (e.g. `feat: add a skill`)
-- [ ] `bash scripts/validate-registry.sh` passes
-- [ ] `python3 -m unittest discover -s tests -v` passes
+- [ ] The Agent Marketplace check in CONTRIBUTING.md passes
 - [ ] Documentation (README / SKILL.md) updated if needed

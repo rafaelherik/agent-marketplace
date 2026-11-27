@@ -1,0 +1,18 @@
+# Consumer config that CI syncs against this checkout, copied to ./registry.
+# List every resource here: general ones under shared, prefixed ones under their harness.
+# Do not combine `all: true` with these groups; it can silently drop the prefixed agents.
+apiVersion: agent-marketplace/v4
+harnesses: [claude, factory, cursor, windsurf, gemini, devin, codex, opencode]
+sources:
+  shared: {directory: ./registry, source_harness: claude}
+  claude-code: {directory: ./registry, source_harness: claude}
+  codex: {directory: ./registry, source_harness: claude}
+resources:
+  shared:
+    include: [skill/context-hub, skill/terraform-modules]
+  claude-code:
+    include: [subagent/cc-explorer]
+    harnesses: [claude]
+  codex:
+    include: [subagent/cx-explorer]
+    harnesses: [codex]
